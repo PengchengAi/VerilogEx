@@ -32,12 +32,13 @@ module seq_id_tb;
   reg [0:4] group;
   reg S_e;
   integer i;
-  integer pass;
+  integer pass, final_res;
   
   //test
   initial
   begin
     pass = 1;
+    final_res = 1;
     rst_n = 0;
     clk = 0;
     X = 0;
@@ -57,12 +58,12 @@ module seq_id_tb;
       else
         S_e = 1'b0;
       pass = test_print(S, S_e);
-      if(pass == 0) $stop;
+      if(pass == 0) begin final_res = 0; $stop; end
       
       seque = seque << 1;   
     end
     
-    if(pass == 1)
+    if(final_res == 1)
       $display("All tests passed.");
     else
       $display("Some tests failed. Please check your design.");

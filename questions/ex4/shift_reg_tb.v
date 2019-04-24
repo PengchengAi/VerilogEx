@@ -30,7 +30,7 @@ module shift_reg_tb;
                 .D(D), .Sin(Sin), .Q(Q), .Sout(Sout));
                 
   
-  integer pass;
+  integer pass, final_res;
   
   always
   begin
@@ -41,6 +41,7 @@ module shift_reg_tb;
   initial
   begin
     pass = 1;
+    final_res = 1;
     clk = 1;
     rst_n = 0;
     preset_n = 1;
@@ -48,35 +49,35 @@ module shift_reg_tb;
     D = 4'b1010;
     
     #5 pass = test_print(Q, Sout, 4'b0, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     rst_n = 1;
     preset_n = 0;
     
     #5 pass = test_print(Q, Sout, 4'b0, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     #20 pass = test_print(Q, Sout, 4'b1010, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     preset_n = 1;
     
     #20 pass = test_print(Q, Sout, 4'b0101, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     #20 pass = test_print(Q, Sout, 4'b1011, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     #20 pass = test_print(Q, Sout, 4'b0111, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     #20 pass = test_print(Q, Sout, 4'b1111, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     #20 pass = test_print(Q, Sout, 4'b1111, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
-    if(pass == 1)
+    if(final_res == 1)
       $display("All tests passed.");
     else
       $display("Some tests failed. Please check your design.");

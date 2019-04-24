@@ -4,7 +4,7 @@ module adder_tb;
   reg A, B, Cin;
   wire S, Cout;
   
-  integer pass;
+  integer pass, final_res;
   
   function test_print;
     input S, Cout, S_e, Cout_e;
@@ -29,40 +29,41 @@ module adder_tb;
   initial
   begin
     pass = 1;
+    final_res = 1;
     
     A = 1'b0; B = 1'b0; Cin = 1'b0;
     #10 pass = test_print(S, Cout, 1'b0, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b1; B = 1'b0; Cin = 1'b0;
     #10 pass = test_print(S, Cout, 1'b1, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b0; B = 1'b1; Cin = 1'b0;
     #10 pass = test_print(S, Cout, 1'b1, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b1; B = 1'b1; Cin = 1'b0;
     #10 pass = test_print(S, Cout, 1'b0, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b0; B = 1'b0; Cin = 1'b1;
     #10 pass = test_print(S, Cout, 1'b1, 1'b0);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b1; B = 1'b0; Cin = 1'b1;
     #10 pass = test_print(S, Cout, 1'b0, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b0; B = 1'b1; Cin = 1'b1;
     #10 pass = test_print(S, Cout, 1'b0, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
     A = 1'b1; B = 1'b1; Cin = 1'b1;
     #10 pass = test_print(S, Cout, 1'b1, 1'b1);
-    if(pass == 0) $stop;
+    if(pass == 0) begin final_res = 0; $stop; end
     
-    if(pass == 1)
+    if(final_res == 1)
       $display("All tests passed.");
     else
       $display("Some tests failed. Please check your design.");

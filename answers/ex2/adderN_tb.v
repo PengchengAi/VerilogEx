@@ -30,7 +30,7 @@ module adderN_tb;
     
   wire [3:0] S_e;
   wire Cout_e;
-  integer pass;
+  integer pass, final_res;
   
   assign {Cout_e, S_e} = A + B + Cin;
   
@@ -38,16 +38,17 @@ module adderN_tb;
   initial
   begin
     pass = 1;
+    final_res = 1;
 
     for(A = 5'b0; A < 5'b10000; A = A + 1'b1)
       for(B = 5'b0; B < 5'b10000; B = B + 1'b1)
         for(Cin = 2'b0; Cin < 2'b10; Cin = Cin + 1'b1)
         begin
           #10 pass = test_print(S, Cout, S_e, Cout_e);
-          if(pass == 0) $stop;
+          if(pass == 0) begin final_res = 0; $stop; end
         end
     
-    if(pass == 1)
+    if(final_res == 1)
       $display("All tests passed.");
     else
       $display("Some tests failed. Please check your design.");
